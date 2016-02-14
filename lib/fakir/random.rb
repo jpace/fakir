@@ -1,8 +1,6 @@
 #!/usr/bin/ruby -w
 # -*- ruby -*-
 
-require 'pathname'
-
 module Fakir
   # Returns not-quite-random numbers: if +window+ is nil, then an instance will never return the
   # same number. If +window+ is an integer N, then a random number will not be returned within N
@@ -24,17 +22,13 @@ module Fakir
         if @used.include?(num)
           iters += 1
         else
-          puts "@used(0): #{@used.inspect}"
           @used << num
           if @window
             @used = @used.drop [ @used.length - @window + 1, 0 ].max
           end
-          puts "@used(1): #{@used.inspect}"
-          puts "returning num: #{num}"
           return num
         end
       end
-      puts "returning nil"
       nil
     end
   end
