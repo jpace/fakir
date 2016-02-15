@@ -7,7 +7,7 @@ to not return the same random number within N invocations. Thus one will not get
 appearing to not be) sequence of [ 1, 8, 3, 3, 3, 5, 2, 2 ], with repeating values (3 and 2).
 
 Similarly, Fakir::Array wraps a Ruby Array, extending it with a `rand` method, which will not return
-the same element during any sequences of calling `rand` (until `reset_rand` is called). Thus with
+the same element during any sequences of calling `rand` (until `rand_reset` is called). Thus with
 the array [ "apple", "banana", "cherry" ] one will not get the sequence [ "apple", "apple", "banana"
 ]. This functionality supports seeding data uniquely, such that two elements will not have the same
 content.
@@ -53,6 +53,17 @@ No sequences of length 3 have repeated values.
     ary = %w{ this is a test }
     fary = Fakir::Array.new ary
     4.times { |n| puts fary.rand }
+
+Each of the elements in the original array will be returned, with none repeating.
+
+    ary = %w{ this is a test }
+    fary = Fakir::Array.new ary
+    4.times { |n| puts fary.rand }
+    fary.rand_reset
+    4.times { |n| puts fary.rand }
+
+After `rand_reset` is invoked, the contents of the wrapped array are reset and can be "consumed"
+again.
 
 ### Email addresses
 
