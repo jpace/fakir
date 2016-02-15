@@ -19,22 +19,25 @@ class RandomTest < Test::Unit::TestCase
   def run_window_test max, window
     rnd = Fakir::Random.new max, window
     nums = 20.times.collect { rnd.rand }
-    puts "nums: #{nums}"
     nums.each_with_index do |num, idx|
       assert_not_in_window nums, num, idx, window
     end
   end
 
   def test_window_1
-    run_window_test 3, 1
+    run_window_test 4, 1
   end
   
   def test_window_2
-    run_window_test 3, 2
+    run_window_test 4, 2
+  end
+  
+  def test_window_3
+    run_window_test 4, 3
   end
 
   def test_no_window
-    run_window_test 3, nil
+    run_window_test 4, nil
   end
   
   def test_invalid_window
