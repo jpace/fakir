@@ -17,24 +17,29 @@ module Fakir
 
   class EmailAddress < String
     def initialize firstname, lastname, domain = "example.com"
-      fname = firstname.gsub Regexp.new('[^\w]'), ''
-      lname = lastname.gsub Regexp.new('[^\w]'), ''
-      addr = case rand(3)
-             when 0
-               # "john.smith"
-               fname + "." + lname
-             when 1
-               # "jsmith", "jsmith31"
-               fname[0] + lname + make_number(0.50, 100).to_s
-             when 2
-               # "smithj", "smithj31"
-               lname + fname[0] + make_number(0.30, 100).to_s
-             end
-        super addr.downcase + "@" + domain
+      formats = Array.new
+      formats << "%s.%s"
+      formats << "%.1s%s"
+      formats << "%2$s%1$.1s"
+      formats << "%.1s%s%d"
+      formats << "%2$s%1$.1s%3$d"
+      
+      formats.collect! { |fmt| fmt + "@" + domain }
+
+      fname = clean_word firstname
+      lname = clean_word lastname
+      fidx = rand(formats.size)
+      format = formats[fidx]
+      args = [ fname, lname ]
+      if format.count("%") >= 3
+        args << rand(100)
+      end
+      addr = sprintf format, *args
+      super addr
     end
 
-    def make_number possibility, max
-      rand < possibility ? rand(max) : nil
+    def clean_word str
+      str.gsub(Regexp.new('[^\w]'), '').downcase
     end
   end
 end

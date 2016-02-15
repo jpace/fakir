@@ -7,21 +7,19 @@ module Fakir
   # possibly repeat elements from before +rand_reset+ was invoked.
   class Array < ::Array
     def initialize(*args)
-      rand_reset nil
+      @used = ::Array.new
+      rand_reset
       super
     end
 
-    def rand_reset window = nil
-      @window = window
-      if @used
-        concat @used
-      end
+    def rand_reset
+      concat @used
       @used = ::Array.new
     end
 
     def rand
       if size == 0
-        raise "error: array is empty"
+        raise "error: cannot get random element from an empty array"
       end
       idx = Kernel::rand size
       val = delete_at idx

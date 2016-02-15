@@ -7,19 +7,16 @@ require_relative '../lib/fakir/array'
 class ArrayTest < Test::Unit::TestCase
   def test_within_data_limit
     ary = %w{ this is a test }
-    puts "ary: #{ary}"
     fary = Fakir::Array.new ary
     rands = 4.times.collect { |n| fary.rand }
-    puts "rands: #{rands}"
     assert_equal ary.sort, rands.sort
   end
 
   def test_over_data_limit
     ary = %w{ this is a test }
     fary = Fakir::Array.new ary
-    rands = 4.times.collect { |n| fary.rand }
-    puts "rands: #{rands}"
-    assert_raises RuntimeError, "array is empty" do
+    4.times.collect { |n| fary.rand }
+    assert_raises RuntimeError, "error: cannot get random element from an empty array" do
       fary.rand
     end
   end
