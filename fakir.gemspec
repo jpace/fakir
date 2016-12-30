@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "fakir"
   spec.version       = Fakir::VERSION
   spec.authors       = ["Jeff Pace"]
-  spec.email         = ["jeugenepace@gmail.com"]
+  spec.email         = ["jpace317@gmail.com"]
   spec.summary       = %q{Generates less-random fake data.}
   spec.description   = %q{Generates data using less-than-random data, such as non-sequential random numbers.}
   spec.homepage      = ""
